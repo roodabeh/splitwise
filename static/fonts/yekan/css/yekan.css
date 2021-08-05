@@ -1,0 +1,63 @@
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 100;
+    src: url("../fonts/Yekan_Bakh_EN_01_Hairline.eot");
+    src: url("../fonts/Yekan_Bakh_EN_01_Hairline.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_01_Hairline.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 200;
+    src: url("../fonts/Yekan_Bakh_EN_02_Thin.eot");
+    src: url("../fonts/Yekan_Bakh_EN_02_Thin.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_02_Thin.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/Yekan_Bakh_EN_03_Light.eot");
+    src: url("../fonts/Yekan_Bakh_EN_03_Light.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_03_Light.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/Yekan_Bakh_EN_04_Regular.eot");
+    src: url("../fonts/Yekan_Bakh_EN_04_Regular.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_04_Regular.ttf") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/Yekan_Bakh_EN_05_Medium.eot");
+    src: url("../fonts/Yekan_Bakh_EN_05_Medium.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_05_Medium.ttf?") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/Yekan_Bakh_EN_06_Bold.eot");
+    src: url("../fonts/Yekan_Bakh_EN_06_Bold.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_06_Bold.ttf?") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/Yekan_Bakh_EN_07_Heavy.eot");
+    src: url("../fonts/Yekan_Bakh_EN_07_Heavy.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_07_Heavy.ttf?") format("truetype")
+}
+
+@font-face {
+    font-family: YekanBakh;
+    font-style: normal;
+    font-weight: 800;
+    src: url("../fonts/Yekan_Bakh_EN_08_Fat.eot");
+    src: url("../fonts/Yekan_Bakh_EN_08_Fat.woff") format("woff"), url("../fonts/Yekan_Bakh_EN_08_Fat.ttf?") format("truetype")
+}

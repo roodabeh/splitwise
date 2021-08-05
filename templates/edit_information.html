@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="main-item">
+                    <div class="title">
+                        <h4>
+                            مشخصات کاربری
+                            <a class="fas fa-question-circle red-tooltip" data-toggle="tooltip" data-placement="left"
+                               title="امکان تغییر شماره همراه وجود ندارد"
+                               style="transform: scaleX(-1)"></a>
+                        </h4>
+                    </div>
+                    <form action="/update_information/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="first_name" type="text" class="form-control" value="{{ request.user.first_name }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="last_name" type="text" class="form-control" value="{{ request.user.last_name }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام خانوادگی</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input type="tel" class="form-control" disabled value="{{ request.user.phone }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">تلفن</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="email" type="email" class="form-control" value="{{ request.user.email }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">ایمیل</span>
+                            </div>
+                        </div>
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">ثبت تغییرات</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

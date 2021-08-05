@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="main-item">
+                    <div class="title">
+                        <h4>
+                            دوستان
+                        </h4>
+                    </div>
+                    {% for friend in friends %}
+                    <form action="/visit_friend_profile/{{ friend.2 }}/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="first_name" type="text" class="form-control" disabled value="{{ friend.0 }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="last_name" type="text" class="form-control" disabled value="{{ friend.1 }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام خانوادگی</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input type="tel" class="form-control" disabled value="{{ friend.2 }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">تلفن</span>
+                            </div>
+                        </div>
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">مشاهده</button>
+                        </div>
+                    </form>
+                    {% endfor %}
+
+                </div>
+                <div class="main-item">
+                    <form action="/profile/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">بازگشت</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

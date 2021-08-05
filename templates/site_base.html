@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="{% block head_prefix %}og: http://ogp.me/ns#{% endblock %}">
+    <meta charset="UTF-8">
+    <meta name="author" content="Morteza Abolghasemi">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    {% block meta_tags %}
+
+    {% endblock %}
+
+    <link rel="apple-touch-icon" sizes="57x57"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-16x16.png">
+    <link rel="manifest"
+          href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage"
+          content="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="google-site-verification" content="btyk0pPzZyp3ZAcl-8UoFacYoCmk6EJ09inzZdx2y4I"/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140802251-1"></script>
+    
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KTFHK4D');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/static/landing_page/custom.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/font/css/fontiran.min.css">
+    <link rel="stylesheet"
+          href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/font/css/style.min.css">
+
+    <style>
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes message_move {
+            0% {
+                left: -100px;
+            }
+            25% {
+                left: 200px;
+            }
+            30% {
+                left: 150px;
+            }
+            100% {
+                left: -100px;
+            }
+        }
+
+        /* Standard syntax */
+        @keyframes message_move {
+            0% {
+                left: -300px;
+            }
+            15% {
+                left: 200px;
+            }
+            30% {
+                left: 150px;
+            }
+            90% {
+                left: 150px;
+            }
+            100% {
+                left: -300px;
+            }
+        }
+
+        .back_messages {
+            position: absolute;
+            top: 60px;
+            left: -300px;
+            -webkit-animation: message_move 10s;
+            animation: message_move 10s;
+            z-index: 10000;
+            list-style-type: none;
+        }
+
+        .back_messages li {
+            padding: 20px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            direction: rtl;
+            text-align: center;
+        }
+
+        .back_messages li.error {
+            color: white;
+            background: red;
+        }
+
+        .back_messages li.success {
+            color: white;
+            background: green;
+        }
+
+        .nav-link.custom-link {
+            text-align: center;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+    </style>
+    <style>
+        @import url(https://use.fontawesome.com/releases/v5.8.1/css/all.css);
+
+        .footer-social-icons {
+            width: 350px;
+            display: block;
+            margin: 0 auto
+        }
+
+        .social-icon {
+            color: #fff;
+            list-style: none
+        }
+
+        ul.social-icons {
+            padding: 0;
+            margin-top: 10px
+        }
+
+        .social-icons li {
+            vertical-align: top;
+            display: inline;
+            height: 130px;
+        }
+
+        .social-icons i, .social-icon img {
+            padding: 10px 14px;
+            -o-transition: .5s;
+            -ms-transition: .5s;
+            -moz-transition: .5s;
+            -webkit-transition: .5s;
+            transition: .5s;
+            background-color: #322f30;
+            width: 50px;
+            height: 38px;
+        }
+
+        .aparat-icon:hover {
+            background: #ed135b;
+        }
+
+        .social-icons a {
+            color: #fff;
+            text-decoration: none
+        }
+
+        .fa-telegram-plane:hover {
+            background-color: #2da5d9
+        }
+
+        .fa-youtube:hover {
+            background-color: #e64a41
+        }
+
+
+        .fa-linkedin-in:hover {
+            background-color: #0073a4
+        }
+
+
+        .fa-facebook-f:hover {
+            background-color: #4267b2
+        }
+
+        .fa-instagram:hover {
+            background: radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%),
+            radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+            radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%),
+            radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%),
+            radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%),
+            radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%),
+            radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+            linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+        }
+
+        .wrapper {
+            width: 90%;
+            margin: 0 auto;
+            max-width: 1128px;
+            transition: max-width .4s ease-out
+        }
+
+        .wrapper:after {
+            content: "";
+            display: table;
+            clear: both
+        }
+
+        .wrapper--thin {
+            max-width: 650px
+        }
+
+        .wrapperFull {
+            max-width: 100%
+        }
+
+        .wrapperFull:after {
+            content: "";
+            display: table;
+            clear: both
+        }
+
+        .wrapperFull--dust-dark {
+            background: #252525;
+        }
+
+        .section {
+            display: block;
+            padding: 48px 0
+        }
+
+        .section:after {
+            content: "";
+            display: table;
+            clear: both
+        }
+
+        .section--short {
+            padding: 24px 0
+        }
+
+        .site-footer {
+            overflow: hidden;
+            width: 100%
+        }
+
+        @media (max-width: 599px) {
+            .site-footer {
+                position: relative;
+                z-index: 9
+            }
+        }
+
+        .text-group {
+            overflow: hidden
+        }
+
+        .text-group > * {
+            margin-bottom: 16px
+        }
+
+        .text-group--short > * {
+            margin-bottom: 6px
+        }
+
+        .text-group > :last-child {
+            margin-bottom: 0
+        }
+
+        .ul > * {
+            list-style-type: disc;
+            margin-left: 36px
+        }
+
+        .social-list {
+            display: inline-block;
+            line-height: 1
+        }
+
+        .social-list > * {
+            display: inline-block;
+            margin: 0 8px
+        }
+
+        .social-list a {
+            display: block;
+            transition: opacity .4s ease-out
+        }
+
+        .social-list a:hover {
+            opacity: .6
+        }
+
+        .group:after {
+            content: "";
+            display: table;
+            clear: both
+        }
+
+        .text-center {
+            text-align: center
+        }
+
+        .text-center p {
+            margin-left: auto;
+            margin-right: auto
+        }
+    </style>
+
+
+    {% block styles %}{% endblock %}
+</head>
+<body>
+
+{% if messages %}
+    <ul class="back_messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% block content %}{% endblock %}
+
+
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>

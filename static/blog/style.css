@@ -1,0 +1,245 @@
+.post-item h1 {
+    font-size: 30px;
+}
+
+.post-item h2 {
+    font-size: 25px;
+}
+
+.post-item h3 {
+    font-size: 23px;
+}
+
+.post-item h4 {
+    font-size: 20px;
+}
+
+.post-item h5 {
+    font-size: 18px;
+}
+
+.post-item h6 {
+    font-size: 15px;
+}
+
+.post-item p {
+    font-size: 14px;
+}
+
+@media (max-width: 800px) {
+    .post-item h1 {
+        font-size: 25px;
+    }
+
+    .post-item h2 {
+        font-size: 23px;
+    }
+
+    .post-item h3 {
+        font-size: 20px;
+    }
+
+    .post-item h4 {
+        font-size: 18px;
+    }
+
+    .post-item h5 {
+        font-size: 15px;
+    }
+
+    .post-item h6 {
+        font-size: 13px;
+    }
+
+    .post-item p {
+        font-size: 10px;
+    }
+}
+
+.blog-section {
+    background: #efefef;
+}
+
+.post-item {
+    background: white;
+    border-radius: 30px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.35);
+    direction: rtl;
+    text-align: right;
+}
+
+.post-item .post-header img {
+    max-height: 450px;
+    width: 100%;
+    margin: auto;
+    border-radius: 30px 30px 0 0;
+}
+
+.post-item .post-title {
+    padding: 20px 1%;
+}
+
+.post-item .post-subtitle {
+    text-align: justify;
+    padding: 0 5%;
+}
+
+.post-item .post-content {
+    padding: 10px 0;
+}
+
+.post-item .post-content h2 {
+    padding: 0 2% 14px;
+}
+
+.post-item .post-content h3 {
+    padding: 0 3% 12px;
+}
+
+.post-item .post-content h4 {
+    padding: 0 4% 10px;
+}
+
+.post-item .post-content h5 {
+    padding: 0 5% 8px;
+}
+
+
+.post-item .post-content p {
+    text-align: justify;
+    padding: 0 5% 6px;
+}
+
+
+.post-item .post-content label {
+    text-align: justify;
+    padding: 0 2% 6px;
+}
+
+.post-item .post-content img {
+    padding: 0;
+    width: 100%;
+    margin: 15px 0 10px;
+}
+
+
+.post-item .post-content li > h2, .post-item .post-content li > h3, .post-item .post-content li > h4, .post-item .post-content li > h5, .post-item .post-content li > h6, .post-item .post-content li > h1 {
+    padding-right: 0;
+}
+
+.post-item .post-details {
+    padding: 5px 5%;
+    position: relative;
+    background: #f1f1f1;
+}
+
+.post-item .post-author {
+    background: #FFE877;
+    display: inline-block;
+    padding: 3px 10px 2px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.post-item .post-author img {
+    width: 20px;
+    height: 20px;
+    border-radius: 8px;
+}
+
+.post-item .post-time {
+    position: absolute;
+    left: 5%;
+    bottom: 5px;
+    padding: 3px 10px 1px;
+    background: #5a5a5a;
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.post-item .post-comment {
+    padding: 20px 2%;
+    background: var(--gray-3);
+    border-radius: 0 0 30px 30px;
+}
+
+.post-item .post-comment input, .post-item .post-comment textarea {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.post-item .post-comment textarea {
+    min-height: 100px;
+}
+
+.post-item .post-content blockquote {
+    padding: 10px 12px;
+    margin-right: 5%;
+    font-size: 14px;
+    line-height: 25px;
+    border: none;
+    border-right: 5px solid #eee;
+    border-left: none;
+}
+
+.post-item .post-content blockquote p {
+    margin: 0;
+    padding-right: 5px;
+}
+
+
+.post-item .post-content .test_captcha {
+    padding: 10px 13px;
+    border-radius: 10px;
+    background: var(--gray-2);
+    margin: auto;
+    width: fit-content;
+    width: -moz-fit-content
+}
+
+.post-item .post-content .captcha-content {
+    background: white;
+    border-radius: 5px;
+    border: 1px solid var(--gray-4);
+    padding: 2px 3px
+}
+
+.post-item .post-content .captcha-refresh-btn {
+    padding: 5px;
+}
+
+.post-item .post-content .captcha-refresh-btn:hover, .captcha-refresh-btn:focus {
+    cursor: pointer;
+}
+
+
+.post-item .post-content sup.reference {
+    unicode-bidi: -moz-isolate;
+    unicode-bidi: -webkit-isolate;
+    unicode-bidi: isolate;
+    white-space: nowrap;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 80%;
+}
+
+.post-item .post-content .reference-link {
+    position: relative;
+}
+
+.post-item .post-content .reference-link span {
+    position: absolute;
+    top: -70px
+}
+
+.post-item .post-content .hidden-content {
+    display: none;
+}
+
+.post-item .post-content ul img {
+    padding-left: 5%
+}
+
+

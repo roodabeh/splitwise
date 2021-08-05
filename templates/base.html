@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" itemprop="keywords" content="{% block keywords %}{% endblock %}">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://res.cloudinary.com/dclfeq8cv/image/upload//bibot/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+    <!-- Bootstrap -->
+    <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static 'vendors/fontawesome-free-5.7.2-web/css/all.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static 'vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static 'vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="{% static 'vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{% static 'vendors/jqvmap/dist/jqvmap.min.css' %}" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="{% static 'vendors/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static 'build/css/custom.css' %}" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/font/css/fontiran.min.css">
+    <link rel="stylesheet"
+          href="https://res.cloudinary.com/dclfeq8cv/raw/upload//bibot/font/css/style.min.css">
+
+
+    <style>
+        /* Safari 4.0 - 8.0 */
+        @-webkit-keyframes message_move {
+            0% {
+                left: -100px;
+            }
+            25% {
+                left: 200px;
+            }
+            30% {
+                left: 150px;
+            }
+            100% {
+                left: -100px;
+            }
+        }
+
+        /* Standard syntax */
+        @keyframes message_move {
+            0% {
+                left: -300px;
+            }
+            15% {
+                left: 200px;
+            }
+            30% {
+                left: 150px;
+            }
+            90% {
+                left: 150px;
+            }
+            100% {
+                left: -300px;
+            }
+        }
+
+        .back_messages {
+            position: absolute;
+            top: 60px;
+            left: -300px;
+            -webkit-animation: message_move 10s;
+            animation: message_move 10s;
+            z-index: 10000;
+            list-style-type: none;
+        }
+
+        .back_messages li {
+            padding: 20px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            direction: rtl;
+            text-align: center;
+        }
+
+        .back_messages li.error {
+            color: white;
+            background: red;
+        }
+
+        .back_messages li.success {
+            color: white;
+            background: green;
+        }
+
+        td{
+            font-size: small;
+        }
+    </style>
+
+    {% block style %}{% endblock %}
+</head>
+
+<body class="nav-md">
+{% if messages %}
+    <ul class="back_messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<div class="container body">
+    <div class="main_container">
+
+        <div class="left_col" role="main" style="min-height: calc(100% - 40px); padding: 0 0 50px 0;">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>
+
+<!-- jQuery -->
+
+<script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'vendors/fastclick/lib/fastclick.js' %}"></script>
+<!-- NProgress -->
+<script src="{% static 'vendors/nprogress/nprogress.js' %}"></script>
+<!-- Chart.js -->
+<script src="{% static 'vendors/Chart.js/dist/Chart.min.js' %}"></script>
+<!-- gauge.js -->
+<script src="{% static 'vendors/gauge.js/dist/gauge.min.js' %}"></script>
+<!-- bootstrap-progressbar -->
+<script src="{% static 'vendors/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+<!-- iCheck -->
+<script src="{% static 'vendors/iCheck/icheck.min.js' %}"></script>
+<!-- Skycons -->
+<script src="{% static 'vendors/skycons/skycons.js' %}"></script>
+<!-- Flot -->
+<script src="{% static 'vendors/Flot/jquery.flot.js' %}"></script>
+<script src="{% static 'vendors/Flot/jquery.flot.pie.js' %}"></script>
+<script src="{% static 'vendors/Flot/jquery.flot.time.js' %}"></script>
+<script src="{% static 'vendors/Flot/jquery.flot.stack.js' %}"></script>
+<script src="{% static 'vendors/Flot/jquery.flot.resize.js' %}"></script>
+<!-- Flot plugins -->
+<script src="{% static 'vendors/flot.orderbars/js/jquery.flot.orderBars.js' %}"></script>
+<script src="{% static 'vendors/flot-spline/js/jquery.flot.spline.min.js' %}"></script>
+<script src="{% static 'vendors/flot.curvedlines/curvedLines.js' %}"></script>
+<!-- DateJS -->
+<script src="{% static 'vendors/DateJS/build/date.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'vendors/jqvmap/dist/jquery.vmap.js' %}"></script>
+<script src="{% static 'vendors/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+<script src="{% static 'vendors/jqvmap/examples/js/jquery.vmap.sampledata.js' %}"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="{% static 'vendors/moment/min/moment.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{% static 'build/js/custom.min.js' %}"></script>
+
+{% block script %}{% endblock %}
+</body>
+</html>
+
+

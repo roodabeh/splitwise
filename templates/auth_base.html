@@ -1,0 +1,105 @@
+{% extends 'site_base.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/animate/animate.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/css-hamburgers/hamburgers.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/animsition/css/animsition.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/select2/select2.min.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/daterangepicker/daterangepicker.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/css/util.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://res.cloudinary.com/dclfeq8cv/raw/upload/v155540946/advercha/site/login_page/css/main.css"
+/>
+{% endblock %} {% block content %}
+<div class="limiter">
+  <div class="container-login100 p-t-50">
+    <div
+      class="wrap-login100 p-t-30 p-b-30"
+      style="padding-right: 5%; padding-left: 5%"
+    >
+      {% block auth_content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/animsition/js/animsition.min.js"></script>
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/select2/select2.min.js"></script>
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/daterangepicker/moment.min.js"></script>
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/daterangepicker/daterangepicker.js"></script>
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/vendor/countdowntime/countdowntime.js"></script>
+<script src="https://res.cloudinary.com/dclfeq8cv/raw/upload/v1555409746/advercha/site/login_page/js/main.js"></script>
+<script>
+  var persianNumbers = [
+    /۰/g,
+    /۱/g,
+    /۲/g,
+    /۳/g,
+    /۴/g,
+    /۵/g,
+    /۶/g,
+    /۷/g,
+    /۸/g,
+    /۹/g,
+  ];
+  var arabicNumbers = [
+    /٠/g,
+    /١/g,
+    /٢/g,
+    /٣/g,
+    /٤/g,
+    /٥/g,
+    /٦/g,
+    /٧/g,
+    /٨/g,
+    /٩/g,
+  ];
+  var fixNumbers = function (str) {
+    if (typeof str === "string") {
+      for (var i = 0; i < 10; i++) {
+        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+      }
+    }
+    return str;
+  };
+  $(".p_to_e_number").keyup(function () {
+    $(this).val(fixNumbers($(this).val()));
+  });
+  $(".p_to_e_number").keyup(function () {
+    $(this).val(fixNumbers($(this).val()));
+  });
+</script>
+{% block auth_scripts %}{% endblock %} {% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="main-item">
+                    <div class="title">
+                        <h4>
+                            مشخصات کاربر
+                        </h4>
+                    </div>
+                    <form action="/profile/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="first_name" type="text" class="form-control" disabled value="{{ other_first_name }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="last_name" type="text" class="form-control" disabled value="{{ other_last_name }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">نام خانوادگی</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input type="tel" class="form-control" disabled value="{{ other_phone }}"
+                                       style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">تلفن</span>
+                            </div>
+                        </div>
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">بازگشت</button>
+                        </div>
+                    </form>
+                    {% if is_friend %}
+                    <form action="/delete_friend/{{ other_phone }}/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">حذف کردن از لیست دوستان</button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <form action="/add_friend/{{ other_phone }}/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">اضافه کردن به لیست دوستان</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
