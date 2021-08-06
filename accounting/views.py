@@ -1,9 +1,8 @@
 import random
 
+from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
-from django.contrib import messages
-import requests
 
 from accounting.models import User, Friendship
 
@@ -209,7 +208,7 @@ def list_of_friends(request):
                 (friendship.friend.first_name,
                  friendship.friend.last_name,
                  friendship.friend.phone)
-                           )
+            )
         print(friends)
         content = {
             'friends': friends
