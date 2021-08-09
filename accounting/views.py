@@ -254,8 +254,7 @@ def create_group(request):
                 Membership.objects.create(person=person, group=group)
                 print("create_group")
                 print(Membership.objects.all())
-                return redirect('/list_of_groups/')
-            # return redirect('/visit_group/{}'.format(group.id))
+                return redirect('/visit_group/{}'.format(group.id))
         else:
             form = ExpenseGroupForm()
         return render(request, 'group/create_group.html', context={'form': form})
@@ -263,13 +262,40 @@ def create_group(request):
         return redirect('/login/')
 
 
-def add_member(request, group_id):
-    pass
+def visit_group(request, group_id):
+    if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
+        context = {
+            'group_id': group_id,
+            'members': group.members.all(),
+        }
+
+        return render(request, 'group/visit_group.html', context=context)
+    else:
+        return redirect('/login/')
 
 
-def delete_group(request, group_id):
+def add_member(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
+            group_id = request.POST['group_id']
+            group = ExpenseGroup.objects.get(pk=group_id)
+
+            other_user = find_user_by_phone_num(request.POST['phone'])
+            if other_user:
+                Membership.objects.create(person=other_user, group=group)
+                return redirect('/visit_group/{}'.format(group.id))
+            else:
+                messages.error(request, 'شماره‌ی مورد نظر موجود نیست!')
+                return redirect('/visit_group/{}'.format(group.id))
+    else:
+        return redirect('/login/')
+
+
+def delete_group(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            group_id = request.POST['group_id']
             group = ExpenseGroup.objects.get(pk=group_id)
 
             group.members.clear()
