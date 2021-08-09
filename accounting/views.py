@@ -1,4 +1,5 @@
 import random
+import os
 
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
@@ -243,9 +244,20 @@ def create_group(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             person = request.user
+
+            if request.FILES:
+                destination_path = os.path.join(ExpenseGroup.avatar.upload_to, request.POST['avatar'])
+                file = request.FILES['file']
+                with open(destination_path, 'wb+') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+                avatar = destination_path
+            else:
+                avatar = ExpenseGroup().avatar.default
+
             group = ExpenseGroup.objects.create(
                 name=request.POST['name'],
-                avatar=request.POST['avatar'],
+                avatar=avatar,
             )
 
             Membership.objects.create(person=person, group=group)
@@ -254,6 +266,12 @@ def create_group(request):
             return redirect('/list_of_groups/')
             # return redirect('/visit_group/{}'.format(group.id))
         else:
+            # for group_id in range(1, 4):
+            #     group = ExpenseGroup.objects.get(pk=group_id)
+            #
+            #     group.members.clear()
+            #     group.delete()
+
             return render(request, 'group/create_group.html')
     else:
         return redirect('/login/')
@@ -281,11 +299,7 @@ def list_of_groups(request):
     if request.user.is_authenticated:
         groups = []
         for membership in Membership.objects.filter(person=request.user):
-            groups.append(
-                (membership.group.id,
-                 membership.group.name,
-                 membership.group.avatar)
-            )
+            groups.append(membership.group)
         print(groups)
         content = {
             'groups': groups

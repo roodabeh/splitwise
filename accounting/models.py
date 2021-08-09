@@ -14,7 +14,7 @@ class User(AbstractUser):
     verification_code = models.IntegerField(default=19563)
     verified = models.BooleanField(default=False)
     emailVerified = models.BooleanField(default=False)
-    avatar = models.ImageField('group picture', upload_to='static/images/avatars/', default='static/images/admin.png')
+    avatar = models.ImageField('group picture', upload_to="static/images/avatars/", default='static/images/admin.png')
 
 
 class Friendship(models.Model):
@@ -30,7 +30,7 @@ class Friendship(models.Model):
 class ExpenseGroup(models.Model):
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(User, through='Membership')
-    avatar = models.ImageField('group picture', upload_to='static/images/avatars/', default='static/images/admin.png')
+    avatar = models.ImageField('group picture', upload_to="static/images/avatars/", default='static/images/admin.png')
 
     def __str__(self):
         return self.name

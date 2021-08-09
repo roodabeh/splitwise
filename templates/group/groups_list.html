@@ -11,18 +11,18 @@
                     </h4>
                 </div>
                 {% for group in groups %}
-                <form action="/visit_group/{{ group.0 }}/" class="form-row align-items-center" method="post"
+                <form action="/visit_group/{{ group.id }}/" class="form-row align-items-center" method="post"
                       style="background: white; padding: 5px">
                     <div class="col-md-6 my_form_item">
                         <div class="input-group" style="direction: ltr">
                             <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
                                    type="text"
-                                   value="{{ group.1 }}">
+                                   value="{{ group.name }}">
                             <span class="input-group-addon">نام</span>
                         </div>
                     </div>
                     <div class="col-md-6 my_form_item">
-                        <img src="group.2"/>
+                        <img src="/{{ group.avatar.url }}"/>
                     </div>
                     <div class="col-auto my_form_item">
                         {% csrf_token %}
