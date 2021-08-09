@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -13,6 +14,7 @@ class User(AbstractUser):
     verification_code = models.IntegerField(default=19563)
     verified = models.BooleanField(default=False)
     emailVerified = models.BooleanField(default=False)
+    avatar = models.ImageField('group picture', upload_to='static/images/avatars/', default='static/images/admin.png')
 
 
 class Friendship(models.Model):
@@ -24,17 +26,17 @@ class Friendship(models.Model):
     #         models.UniqueConstraint(fields=['user', 'friend'], name="unique_friends")
     #     ]
 
-# class Group(models.Model):
-#     name = models.CharField(max_length=128)
-#     members = models.ManyToManyField(User, through='Membership')
-#
-#     def __str__(self):
-#         return self.name
-#
-#
-# class Membership(models.Model):
-#     person = models.ForeignKey(User, on_delete=models.CASCADE)
-#     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-#     # date_joined = models.DateField()
-#     # invite_reason = models.CharField(max_length=64)
 
+class ExpenseGroup(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(User, through='Membership')
+    avatar = models.ImageField('group picture', upload_to='static/images/avatars/', default='static/images/admin.png')
+
+    def __str__(self):
+        return self.name
+
+
+class Membership(models.Model):
+    person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="person")
+    group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, related_name="group")
+    date_joined = models.DateField(default=timezone.now)

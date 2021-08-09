@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
 
-from accounting.models import User, Friendship
+from accounting.models import User, Friendship, Membership, ExpenseGroup
 
 
 def login_view(request):
@@ -234,4 +234,61 @@ def visit_friend_profile(request, phone):
                 messages.error(request, 'شماره‌ی مورد نظر موجود نیست!')
                 # TODO: ask TA
                 return redirect('/profile/')
+    return redirect('/login/')
+
+
+# ************************* Group *************************
+
+def create_group(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            person = request.user
+            group = ExpenseGroup.objects.create(
+                name=request.POST['name'],
+                avatar=request.POST['avatar'],
+            )
+
+            Membership.objects.create(person=person, group=group)
+            print("create_group")
+            print(Membership.objects.all())
+            return redirect('/list_of_groups/')
+            # return redirect('/visit_group/{}'.format(group.id))
+        else:
+            return render(request, 'group/create_group.html')
+    else:
+        return redirect('/login/')
+
+
+def add_member(request, group_id):
+    pass
+
+
+def delete_group(request, group_id):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            group = ExpenseGroup.objects.get(pk=group_id)
+
+            group.members.clear()
+            group.delete()
+            print("delete_group")
+            print(Membership.objects.all())
+            return redirect('/list_of_groups/')
+    else:
+        return redirect('/login/')
+
+
+def list_of_groups(request):
+    if request.user.is_authenticated:
+        groups = []
+        for membership in Membership.objects.filter(person=request.user):
+            groups.append(
+                (membership.group.id,
+                 membership.group.name,
+                 membership.group.avatar)
+            )
+        print(groups)
+        content = {
+            'groups': groups
+        }
+        return render(request, 'group/groups_list.html', context=content)
     return redirect('/login/')

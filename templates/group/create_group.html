@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="/create_group/" class="form-row align-items-center" method="post" style="background: white; padding: 5px">
+  <div class="col-md-6 my_form_item">
+    <div class="input-group" style="direction: ltr">
+      <input class="form-control" name="name" required style="direction: rtl; text-align: right;" type="text">
+      <span class="input-group-addon">نام</span>
+    </div>
+  </div>
+
+  <div class="form-row field-avatar col-md-6 my_form_item">
+    <div class="input-group" style="direction: ltr">
+      <input accept="image/*" class="form-control" name="avatar" style="direction: rtl; text-align: right;" type="file">
+      <span class="input-group-addon">عکس گروه</span>
+    </div>
+  </div>
+
+  <div class="col-auto my_form_item">
+    {% csrf_token %}
+    <button class="btn btn-success my-btn" type="submit">ساخت</button>
+  </div>
+
+</form>
+{% endblock %}

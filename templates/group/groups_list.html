@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="main-item">
+                <div class="title">
+                    <h4>
+                        گروه‌ها
+                    </h4>
+                </div>
+                {% for group in groups %}
+                <form action="/visit_group/{{ group.0 }}/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
+                                   type="text"
+                                   value="{{ group.1 }}">
+                            <span class="input-group-addon">نام</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <img src="group.2"/>
+                    </div>
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">مشاهده</button>
+                    </div>
+                </form>
+                {% endfor %}
+
+            </div>
+            <div class="main-item">
+                <form action="/profile/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">بازگشت</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

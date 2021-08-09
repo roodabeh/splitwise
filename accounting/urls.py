@@ -1,8 +1,6 @@
 from django.urls import path
 
-from accounting.views import forgot_password, profile, logout_view, login_view, sign_up_view, check_code_validity, \
-    edit_information, update_information, update_password, visit_other_user_profile, add_friend, delete_friend, list_of_friends,\
-    visit_friend_profile
+from accounting.views import *
 
 urlpatterns = [
     path('forgot_password/', forgot_password, name='forgot_password'),
@@ -20,5 +18,12 @@ urlpatterns = [
     path('add_friend/<str:phone>/', add_friend, name='add_friend'),
     path('delete_friend/<str:phone>/', delete_friend, name='delete_friend'),
     path('visit_friend_profile/<str:phone>/', visit_friend_profile, name='check_friend'),
+
+    # ************************* Group *************************
+    path('create_group/', create_group, name='create_group'),
+    path('add_member/<str:group_id>/', add_member, name='add_member'),
+    path('delete_group/<str:group_id>/', delete_group, name='delete_group'),
+    path('list_of_groups/', list_of_groups, name='list_of_groups'),
+
     path('', profile, name='profile'),
 ]
