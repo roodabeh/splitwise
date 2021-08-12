@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
 
-from accounting.models import User, Friendship, Membership, ExpenseGroup
+from accounting.forms import *
 
 
 def login_view(request):
@@ -243,47 +243,59 @@ def visit_friend_profile(request, phone):
 def create_group(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            person = request.user
+            form = ExpenseGroupForm(request.POST, request.FILES)
+            if form.is_valid():
+                person = request.user
 
-            if request.FILES:
-                destination_path = os.path.join(ExpenseGroup.avatar.upload_to, request.POST['avatar'])
-                file = request.FILES['file']
-                with open(destination_path, 'wb+') as destination:
-                    for chunk in file.chunks():
-                        destination.write(chunk)
-                avatar = destination_path
-            else:
-                avatar = ExpenseGroup().avatar.default
+                group = form.save()
+                group.name = request.POST['name']
+                group.save()
 
-            group = ExpenseGroup.objects.create(
-                name=request.POST['name'],
-                avatar=avatar,
-            )
-
-            Membership.objects.create(person=person, group=group)
-            print("create_group")
-            print(Membership.objects.all())
-            return redirect('/list_of_groups/')
-            # return redirect('/visit_group/{}'.format(group.id))
+                Membership.objects.create(person=person, group=group)
+                print("create_group")
+                print(Membership.objects.all())
+                return redirect('/visit_group/{}'.format(group.id))
         else:
-            # for group_id in range(1, 4):
-            #     group = ExpenseGroup.objects.get(pk=group_id)
-            #
-            #     group.members.clear()
-            #     group.delete()
-
-            return render(request, 'group/create_group.html')
+            form = ExpenseGroupForm()
+        return render(request, 'group/create_group.html', context={'form': form})
     else:
         return redirect('/login/')
 
 
-def add_member(request, group_id):
-    pass
+def visit_group(request, group_id):
+    if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
+        context = {
+            'group_id': group_id,
+            'members': group.members.all(),
+        }
+
+        return render(request, 'group/visit_group.html', context=context)
+    else:
+        return redirect('/login/')
 
 
-def delete_group(request, group_id):
+def add_member(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
+            group_id = request.POST['group_id']
+            group = ExpenseGroup.objects.get(pk=group_id)
+
+            other_user = find_user_by_phone_num(request.POST['phone'])
+            if other_user:
+                Membership.objects.create(person=other_user, group=group)
+                return redirect('/visit_group/{}'.format(group.id))
+            else:
+                messages.error(request, 'شماره‌ی مورد نظر موجود نیست!')
+                return redirect('/visit_group/{}'.format(group.id))
+    else:
+        return redirect('/login/')
+
+
+def delete_group(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            group_id = request.POST['group_id']
             group = ExpenseGroup.objects.get(pk=group_id)
 
             group.members.clear()
@@ -299,6 +311,9 @@ def list_of_groups(request):
     if request.user.is_authenticated:
         groups = []
         for membership in Membership.objects.filter(person=request.user):
+            # group = membership.group
+            # group.members.clear()
+            # group.delete()
             groups.append(membership.group)
         print(groups)
         content = {

@@ -18,3 +18,4 @@ log/**
 **/static/media/**
 !**/migrations
 !**/migrations/__init__.py
+/media/avatars/*
