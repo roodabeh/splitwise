@@ -44,7 +44,16 @@
                         </div>
                         <div class="col-auto my_form_item">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-success my-btn">ثبت تغییرات</button>
+                            <button type="submit" class="btn btn-success my-btn">ذخیره </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="main-item">
+                    <form action="/profile/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">بازگشت</button>
                         </div>
                     </form>
                 </div>

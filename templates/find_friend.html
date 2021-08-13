@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="main-item">
+                    <div class="title">
+                        <h4>
+                            یافتن دوست
+                            <a class="fas fa-question-circle red-tooltip" data-toggle="tooltip" data-placement="left"
+                               title="شماره تلفن مورد نظر را وارد کنید."
+                               style="transform: scaleX(-1)"></a>
+                        </h4>
+                    </div>
+                    <form action="/visit_other_user_profile/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-md-6 my_form_item">
+                            <div class="input-group" style="direction: ltr">
+                                <input name="other_phone" type="tel" class="form-control" style="direction: rtl; text-align: right;">
+                                <span class="input-group-addon">تلفن</span>
+                            </div>
+                        </div>
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">جستجو</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="main-item">
+                    <form action="/profile/" method="post" class="form-row align-items-center" style="background: white; padding: 5px">
+                        <div class="col-auto my_form_item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success my-btn">بازگشت</button>
+                        </div>
+                    </form>
+        </div>
+    </div>
+{% endblock %}

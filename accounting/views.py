@@ -114,13 +114,26 @@ def update_password(request):
 
 def profile(request):
     if request.user.is_authenticated:
-        return render(request, 'user_profile.html')
+        return render(request, 'profile.html')
+        # return render(request, 'user_profile.html')
     return redirect('/login/')
 
 
 def edit_information(request):
     if request.user.is_authenticated:
         return render(request, 'edit_information.html')
+    return redirect('/login/')
+
+
+def user_info(request):
+    if request.user.is_authenticated:
+        return render(request, 'user_info.html')
+    return redirect('/login/')
+
+
+def find_friend_view(request):
+    if request.user.is_authenticated:
+        return render(request, 'find_friend.html')
     return redirect('/login/')
 
 
