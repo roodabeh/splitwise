@@ -115,7 +115,6 @@ def update_password(request):
 def profile(request):
     if request.user.is_authenticated:
         return render(request, 'profile.html')
-        # return render(request, 'user_profile.html')
     return redirect('/login/')
 
 
@@ -299,7 +298,7 @@ def add_member(request):
                 Membership.objects.create(person=other_user, group=group)
                 return redirect('/visit_group/{}'.format(group.id))
             else:
-                messages.error(request, 'شماره‌ی مورد نظر موجود نیست!')
+                messages.error(request, 'کاربر مورد نظر موجود نیست!')
                 return redirect('/visit_group/{}'.format(group.id))
     else:
         return redirect('/login/')
