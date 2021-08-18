@@ -61,31 +61,45 @@ def verify_phone(request, user):
 
 def sign_up_view(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.POST['phone']).first()
-        if user:
-            if user.verified:
-                messages.error(request, 'کاربری با این شماره موجود است!')
-                return render(request, 'sign_up.html')
+        form = UserForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = User.objects.filter(username=request.POST['phone']).first()
+            if user:
+                if user.verified:
+                    messages.error(request, 'کاربری با این شماره موجود است!')
+                else:
+                    return verify_phone(request, user)
             else:
+                user = form.save(commit=False)
+
+                user.first_name = request.POST['first_name']
+                user.last_name = request.POST['last_name']
+                user.username = request.POST['phone']
+                user.password = request.POST['password']
+                user.address = request.POST['address']
+                user.email = request.POST['email']
+
+                user.save()
+                form.save_m2m()
+
                 return verify_phone(request, user)
-        else:
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            username = request.POST['phone']
-            password = request.POST['password']
-            address = request.POST['address']
-            email = request.POST['email']
-            user = User.objects.create_user(
-                username=username,
-                phone=username,
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name,
-                address=address
-            )
-            return verify_phone(request, user)
-    return render(request, 'sign_up.html')
+    else:
+        form = UserForm()
+        if request.method == 'POST':
+            user = form.save(commit=False)
+
+            request.user.avatar = user.avatar
+            request.user.first_name = request.POST['first_name']
+            request.user.last_name = request.POST['last_name']
+            request.user.email = request.POST['email']
+            request.user.email_verified = False
+
+            request.user.save()
+            form.save_m2m()
+
+            return redirect('/profile/')
+
+    return render(request, 'sign_up.html', context={'form': form})
 
 
 def forgot_password(request):

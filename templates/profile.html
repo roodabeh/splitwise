@@ -13,7 +13,7 @@
     <!-- Bootstrap -->
     <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/font-awesome/css/all.min.css' %}" rel="stylesheet">
     <!-- NProgress -->
     <link href="{% static 'vendors/nprogress/nprogress.css' %}" rel="stylesheet">
     <!-- iCheck -->
@@ -100,8 +100,9 @@
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                      aria-expanded="false">
-                    <img alt="" src="{{ request.user.avatar.url }}">{{ request.user.first_name }} {{
-                    request.user.last_name }}
+                    <img alt="" src="{{ request.user.avatar.url }}">
+                    {{ request.user.first_name }}
+                    {{ request.user.last_name }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-left">
