@@ -85,20 +85,6 @@ def sign_up_view(request):
                 return verify_phone(request, user)
     else:
         form = UserForm()
-        if request.method == 'POST':
-            user = form.save(commit=False)
-
-            request.user.avatar = user.avatar
-            request.user.first_name = request.POST['first_name']
-            request.user.last_name = request.POST['last_name']
-            request.user.email = request.POST['email']
-            request.user.email_verified = False
-
-            request.user.save()
-            form.save_m2m()
-
-            return redirect('/profile/')
-
     return render(request, 'sign_up.html', context={'form': form})
 
 
