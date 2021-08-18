@@ -1,5 +1,4 @@
 import random
-import os
 
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
@@ -117,11 +116,29 @@ def profile(request):
         return render(request, 'profile.html')
     return redirect('/login/')
 
+
 def edit_information(request):
     if request.user.is_authenticated:
-        print("hereeee1",request)
-        return render(request, 'edit_information.html')
-    return redirect('/login/')
+        if request.method == 'POST':
+            form = UserForm(request.POST, request.FILES)
+            if form.is_valid():
+                user = form.save(commit=False)
+
+                request.user.avatar = user.avatar
+                request.user.first_name = request.POST['first_name']
+                request.user.last_name = request.POST['last_name']
+                request.user.email = request.POST['email']
+                request.user.email_verified = False
+
+                request.user.save()
+                form.save_m2m()
+
+                return redirect('/profile/')
+        else:
+            form = UserForm()
+        return render(request, 'edit_information.html', context={'form': form})
+    else:
+        return redirect('/login/')
 
 
 def user_info(request):
@@ -134,25 +151,6 @@ def find_friend_view(request):
     if request.user.is_authenticated:
         return render(request, 'find_friend.html')
     return redirect('/login/')
-
-
-def update_information(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            print("hereeee",request.user.avatar)
-            print(request.user.first_name, request.POST['first_name'])
-            request.user.first_name = request.POST['first_name']
-            print(request.user.first_name, request.POST['first_name'])
-            request.user.last_name = request.POST['last_name']
-            request.user.email = request.POST['email']
-            request.user.email_verified = False
-            request.user.save()
-            return redirect('/profile/')
-        else:
-            form = UserForm()
-        return render(request, 'group/edit_information.html', context={'form': form})
-    else:
-        return redirect('/login/')
 
 
 def logout_view(request):
@@ -261,12 +259,9 @@ def visit_friend_profile(request, phone):
 
 def create_group(request):
     if request.user.is_authenticated:
-        print("group1")
         if request.method == 'POST':
-            print("group2")
             form = ExpenseGroupForm(request.POST, request.FILES)
             if form.is_valid():
-                print("group3")
                 person = request.user
 
                 group = form.save()
@@ -279,7 +274,6 @@ def create_group(request):
                 return redirect('/visit_group/{}'.format(group.id))
         else:
             form = ExpenseGroupForm()
-        print("group4")
         return render(request, 'group/create_group.html', context={'form': form})
     else:
         return redirect('/login/')

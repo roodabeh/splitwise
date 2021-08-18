@@ -98,8 +98,10 @@
 
               <ul class="nav navbar-nav navbar-left">
                 <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">{{ request.user.first_name }} {{ request.user.last_name }}
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                     aria-expanded="false">
+                    <img alt="" src="{{ request.user.avatar.url }}">{{ request.user.first_name }} {{
+                    request.user.last_name }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-left">

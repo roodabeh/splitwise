@@ -14,7 +14,7 @@ class User(AbstractUser):
     verification_code = models.IntegerField(default=19563)
     verified = models.BooleanField(default=False)
     emailVerified = models.BooleanField(default=False)
-    avatar = models.ImageField('group picture', upload_to="avatars/", default='admin.png')
+    avatar = models.ImageField('profile picture', upload_to="avatars/", default='admin.png')
 
 
 class Friendship(models.Model):
