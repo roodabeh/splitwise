@@ -73,6 +73,19 @@
                 </form>
             </div>
 
+            <!-- Delete Group -->
+            <div class="main-item">
+                <form action="/delete_group/{{ group_id }}/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-danger my-btn" type="submit">پاک کردن گروه</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+
+
             <!-- expenses -->
             <div class="main-item">
                 <div class="title">
@@ -115,28 +128,15 @@
 
             <!-- Add Expense -->
             <div class="main-item">
-                <form action="/add_expense/" class="form-row align-items-center" method="post"
+                <form action="/add_expense/{{ group_id }}/" class="form-row align-items-center" method="post"
                       style="background: white; padding: 5px">
                     <div class="col-auto my_form_item">
-                        <input hidden name="group_id" value="{{ group_id }}">
                         {% csrf_token %}
                         <button class="btn btn-success my-btn" type="submit">افزودن خرج جدید</button>
                     </div>
                 </form>
             </div>
 
-
-            <!-- Delete Group -->
-            <div class="main-item">
-                <form action="/delete_group/{{ group_id }}/" class="form-row align-items-center" method="post"
-                      style="background: white; padding: 5px">
-                    <div class="col-auto my_form_item">
-                        {% csrf_token %}
-                        <button class="btn btn-danger my-btn" type="submit">پاک کردن گروه</button>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
 
             <!-- Back -->
             <div class="main-item">

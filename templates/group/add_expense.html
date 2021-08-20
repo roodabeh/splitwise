@@ -12,17 +12,17 @@
                         سهم اعضا
                     </h4>
                 </div>
-                <form action="/confirm_expense/"  class="form-row align-items-center"
+                <form action="/confirm_expense/{{ group_id }}/" class="form-row align-items-center"
                       method="post" style="background: white; padding: 5px">
-                {% for member in members %}
-                        <div class="col-md-6 my_form_item">
-                            <div class="input-group" style="direction: ltr">
-                                <input class="form-control" disabled name="first_name"
-                                       style="direction: rtl; text-align: right;" type="text"
-                                       value="{{ member.first_name }}">
-                                <span class="input-group-addon">نام</span>
-                            </div>
+                    {% for member in members %}
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="first_name"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ member.first_name }}">
+                            <span class="input-group-addon">نام</span>
                         </div>
+                    </div>
                         <div class="col-md-6 my_form_item">
                             <div class="input-group" style="direction: ltr">
                                 <input class="form-control" disabled name="last_name"
@@ -33,13 +33,13 @@
                         </div>
                         <div class="col-auto my_form_item">
                             <div class="input-group" style="direction: ltr">
-                                <input name="share_{{ member.first_name }}" type="text" class="form-control" value="1"
+                                <input class="form-control" name="share_{{ member.username }}" type="text" value="1"
                                        style="direction: rtl; text-align: right;">
                                 <span class="input-group-addon">سهم</span>
                             </div>
                         </div>
 
-                {% endfor %}
+                    {% endfor %}
 
                     <div class="col-auto my_form_item">
                         <div class="input-group" style="direction: ltr">
@@ -50,7 +50,6 @@
                     </div>
 
                     <div class="col-auto my_form_item">
-                        <input hidden name="group_id" value="{{ group_id }}">
                         {% csrf_token %}
                         <button class="btn btn-success my-btn" type="submit">تایید</button>
                     </div>

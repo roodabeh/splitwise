@@ -296,7 +296,7 @@ def visit_group(request, group_id):
     if request.user.is_authenticated:
         group = ExpenseGroup.objects.get(pk=group_id)
         expenses = Expense.objects.filter(group=group_id)
-        print("expenses",expenses)
+        print("expenses", expenses)
         context = {
             'group_id': group_id,
             'owner_id': group.owner.id,
@@ -366,10 +366,11 @@ def list_of_groups(request):
     return redirect('/login/')
 
 
-def add_expense(request):
+# ************************* Expense *************************
+
+def add_expense(request, group_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            group_id = request.POST['group_id']
             print(group_id)
             group = ExpenseGroup.objects.get(pk=group_id)
             print(group.members.all())
@@ -378,27 +379,27 @@ def add_expense(request):
                 'members': group.members.all(),
             }
             return render(request, 'group/add_expense.html', context=context)
+        return redirect('/visit_group/{}'.format(group_id))
     else:
         return redirect('/login/')
 
-def confirm_expense(request):
+
+def confirm_expense(request, group_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            group_id = request.POST['group_id']
             group = ExpenseGroup.objects.get(pk=group_id)
-            expense = Expense.objects.create(group=group, cost=request.POST["cost"],spender = request.user)
+            expense = Expense.objects.create(group=group, cost=request.POST["cost"], spender=request.user)
             shares = []
             for member in group.members.all():
-                shares.append(int(request.POST["share_"+member.first_name]))
+                shares.append(int(request.POST["share_" + member.username]))
             print(shares, sum(shares))
             i = 0
             for member in group.members.all():
-
-                if member.first_name != request.user.first_name:
-                    Debt.objects.create(expense=expense, share= shares[i]/sum(shares), person = member)
+                if member.username != request.user.username:
+                    Debt.objects.create(expense=expense, share=shares[i] / sum(shares), person=member)
                 else:
-                    Debt.objects.create(expense=expense, share= (shares[i]-sum(shares))/sum(shares), person = member)
-                i+= 1
-            return redirect('/visit_group/{}'.format(group.id))
+                    Debt.objects.create(expense=expense, share=(shares[i] - sum(shares)) / sum(shares), person=member)
+                i += 1
+        return redirect('/visit_group/{}'.format(group_id))
     else:
         return redirect('/login/')
