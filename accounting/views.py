@@ -282,9 +282,12 @@ def create_group(request):
 def visit_group(request, group_id):
     if request.user.is_authenticated:
         group = ExpenseGroup.objects.get(pk=group_id)
+        expenses = Expense.objects.filter(group=group_id)
+        print("expenses",expenses)
         context = {
             'group_id': group_id,
             'members': group.members.all(),
+            'expenses': expenses,
         }
 
         return render(request, 'group/visit_group.html', context=context)
@@ -338,3 +341,41 @@ def list_of_groups(request):
         }
         return render(request, 'group/groups_list.html', context=content)
     return redirect('/login/')
+
+
+def add_expense(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            group_id = request.POST['group_id']
+            print(group_id)
+            group = ExpenseGroup.objects.get(pk=group_id)
+            print(group.members.all())
+            context = {
+                'group_id': group_id,
+                'members': group.members.all(),
+            }
+            return render(request, 'group/add_expense.html', context=context)
+    else:
+        return redirect('/login/')
+
+def confirm_expense(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            group_id = request.POST['group_id']
+            group = ExpenseGroup.objects.get(pk=group_id)
+            expense = Expense.objects.create(group=group, cost=request.POST["cost"],spender = request.user)
+            shares = []
+            for member in group.members.all():
+                shares.append(int(request.POST["share_"+member.first_name]))
+            print(shares, sum(shares))
+            i = 0
+            for member in group.members.all():
+
+                if member.first_name != request.user.first_name:
+                    Debt.objects.create(expense=expense, share= shares[i]/sum(shares), person = member)
+                else:
+                    Debt.objects.create(expense=expense, share= (shares[i]-sum(shares))/sum(shares), person = member)
+                i+= 1
+            return redirect('/visit_group/{}'.format(group.id))
+    else:
+        return redirect('/login/')

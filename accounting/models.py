@@ -46,6 +46,7 @@ class Expense(models.Model):
     date = models.DateField(default=timezone.now)
     cost = models.IntegerField(default=0)
     group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, related_name="group_id")
+    spender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="spender")
 
 
 class Debt(models.Model):
