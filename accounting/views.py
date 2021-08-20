@@ -74,6 +74,7 @@ def sign_up_view(request):
 
                 user.first_name = request.POST['first_name']
                 user.last_name = request.POST['last_name']
+                user.phone = request.POST['phone']
                 user.username = request.POST['phone']
                 user.password = request.POST['password']
                 user.address = request.POST['address']
