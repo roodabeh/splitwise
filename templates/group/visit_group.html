@@ -47,9 +47,10 @@
 
             </div>
 
+            {% if is_owner %}
             <!-- Add Member -->
             <div class="main-item">
-                <form action="/add_member/" class="form-row align-items-center" method="post"
+                <form action="/add_member/{{ group_id }}/" class="form-row align-items-center" method="post"
                       style="background: white; padding: 5px">
                     <div class="col-md-6 my_form_item">
                         <div class="input-group" style="direction: ltr">
@@ -59,7 +60,6 @@
                         </div>
                     </div>
                     <div class="col-auto my_form_item">
-                        <input hidden name="group_id" value="{{ group_id }}">
                         {% csrf_token %}
                         <button class="btn btn-success my-btn" type="submit">افزودن</button>
                     </div>
@@ -68,15 +68,15 @@
 
             <!-- Delete Group -->
             <div class="main-item">
-                <form action="/delete_group/" class="form-row align-items-center" method="post"
+                <form action="/delete_group/{{ group_id }}/" class="form-row align-items-center" method="post"
                       style="background: white; padding: 5px">
                     <div class="col-auto my_form_item">
-                        <input hidden name="group_id" value="{{ group_id }}">
                         {% csrf_token %}
                         <button class="btn btn-success my-btn" type="submit">پاک کردن گروه</button>
                     </div>
                 </form>
             </div>
+            {% endif %}
 
             <!-- Back -->
             <div class="main-item">

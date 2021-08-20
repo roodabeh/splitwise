@@ -29,6 +29,7 @@ class Friendship(models.Model):
 
 class ExpenseGroup(models.Model):
     name = models.CharField(max_length=128)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
     members = models.ManyToManyField(User, through='Membership')
     avatar = models.ImageField('group picture', upload_to="avatars/", default='admin.png')
 
