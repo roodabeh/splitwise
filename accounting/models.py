@@ -40,3 +40,17 @@ class Membership(models.Model):
     person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="person")
     group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, related_name="group")
     date_joined = models.DateField(default=timezone.now)
+
+
+class Expense(models.Model):
+    date = models.DateField(default=timezone.now)
+    cost = models.IntegerField(default=0)
+    group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, related_name="group_id")
+    spender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="spender")
+
+
+class Debt(models.Model):
+    expense = models.ForeignKey(Expense, on_delete=models.CASCADE, related_name="expense")
+    share = models.IntegerField(default=0)
+    person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expense")
+
