@@ -23,8 +23,9 @@ urlpatterns = [
     # ************************* Group *************************
     path('create_group/', create_group, name='create_group'),
     path('visit_group/<str:group_id>/', visit_group, name='visit_group'),
-    path('add_member/', add_member, name='add_member'),
-    path('delete_group/', delete_group, name='delete_group'),
+    path('add_member/<str:group_id>/', add_member, name='add_member'),
+    path('del_member/<str:group_id>/', del_member, name='del_member'),
+    path('delete_group/<str:group_id>/', delete_group, name='delete_group'),
     path('list_of_groups/', list_of_groups, name='list_of_groups'),
     path('add_expense/', add_expense, name='add_expense'),
     path('confirm_expense/', confirm_expense, name='confirm_expense'),

@@ -70,18 +70,27 @@ def sign_up_view(request):
                 else:
                     return verify_phone(request, user)
             else:
-                user = form.save(commit=False)
+                user = User.objects.create_user(
+                    username=request.POST['phone'],
+                    phone=request.POST['phone'],
+                    email=request.POST['email'],
+                    password=request.POST['password'],
+                    first_name=request.POST['first_name'],
+                    last_name=request.POST['last_name'],
+                    address=request.POST['address']
+                )
 
-                user.first_name = request.POST['first_name']
-                user.last_name = request.POST['last_name']
-                user.phone = request.POST['phone']
-                user.username = request.POST['phone']
-                user.password = request.POST['password']
-                user.address = request.POST['address']
-                user.email = request.POST['email']
-
-                user.save()
-                form.save_m2m()
+                # user = form.save()
+                #
+                # user.first_name = request.POST['first_name']
+                # user.last_name = request.POST['last_name']
+                # user.phone = request.POST['phone']
+                # user.password = request.POST['password']
+                # user.address = request.POST['address']
+                # user.email = request.POST['email']
+                #
+                # user.save()
+                # form.save_m2m()
 
                 return verify_phone(request, user)
     else:
@@ -264,10 +273,13 @@ def create_group(request):
             form = ExpenseGroupForm(request.POST, request.FILES)
             if form.is_valid():
                 person = request.user
+                group = form.save(commit=False)
 
-                group = form.save()
                 group.name = request.POST['name']
+                group.owner = request.user
+
                 group.save()
+                form.save_m2m()
 
                 Membership.objects.create(person=person, group=group)
                 print("create_group")
@@ -287,6 +299,8 @@ def visit_group(request, group_id):
         print("expenses",expenses)
         context = {
             'group_id': group_id,
+            'owner_id': group.owner.id,
+            'is_owner': group.owner.id == request.user.id,
             'members': group.members.all(),
             'expenses': expenses,
         }
@@ -296,34 +310,43 @@ def visit_group(request, group_id):
         return redirect('/login/')
 
 
-def add_member(request):
+def add_member(request, group_id):
     if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
         if request.method == 'POST':
-            group_id = request.POST['group_id']
-            group = ExpenseGroup.objects.get(pk=group_id)
-
-            other_user = find_user_by_phone_num(request.POST['phone'])
-            if other_user:
-                Membership.objects.create(person=other_user, group=group)
-                return redirect('/visit_group/{}'.format(group.id))
-            else:
-                messages.error(request, 'کاربر مورد نظر موجود نیست!')
-                return redirect('/visit_group/{}'.format(group.id))
+            if request.user.id == group.owner.id:
+                other_user = find_user_by_phone_num(request.POST['phone'])
+                if other_user:
+                    Membership.objects.create(person=other_user, group=group)
+                else:
+                    messages.error(request, 'کاربر مورد نظر موجود نیست!')
+        return redirect('/visit_group/{}'.format(group.id))
     else:
         return redirect('/login/')
 
 
-def delete_group(request):
+def del_member(request, group_id):
     if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
         if request.method == 'POST':
-            group_id = request.POST['group_id']
-            group = ExpenseGroup.objects.get(pk=group_id)
+            if request.user.id == group.owner.id:
+                other_user = find_user_by_phone_num(request.POST['submit'])
+                if other_user:
+                    Membership.objects.filter(person=other_user, group=group).delete()
+        return redirect('/visit_group/{}'.format(group.id))
+    else:
+        return redirect('/login/')
 
-            group.members.clear()
-            group.delete()
-            print("delete_group")
-            print(Membership.objects.all())
-            return redirect('/list_of_groups/')
+
+def delete_group(request, group_id):
+    if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
+        if request.method == 'POST':
+            if request.user.id == group.owner.id:
+                group.members.clear()
+                group.delete()
+                return redirect('/list_of_groups/')
+        return redirect('/visit_group/{}'.format(group.id))
     else:
         return redirect('/login/')
 
@@ -336,7 +359,6 @@ def list_of_groups(request):
             # group.members.clear()
             # group.delete()
             groups.append(membership.group)
-        print(groups)
         content = {
             'groups': groups
         }
