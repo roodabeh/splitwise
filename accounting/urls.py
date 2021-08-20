@@ -27,6 +27,8 @@ urlpatterns = [
     path('del_member/<str:group_id>/', del_member, name='del_member'),
     path('delete_group/<str:group_id>/', delete_group, name='delete_group'),
     path('list_of_groups/', list_of_groups, name='list_of_groups'),
+    path('add_expense/', add_expense, name='add_expense'),
+    path('confirm_expense/', confirm_expense, name='confirm_expense'),
 
     path('', profile, name='profile'),
 ]

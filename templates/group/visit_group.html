@@ -68,10 +68,63 @@
                     </div>
                     <div class="col-auto my_form_item">
                         {% csrf_token %}
-                        <button class="btn btn-success my-btn" type="submit">افزودن</button>
+                        <button class="btn btn-success my-btn" type="submit">افزودن عضو جدید</button>
                     </div>
                 </form>
             </div>
+
+            <!-- expenses -->
+            <div class="main-item">
+                <div class="title">
+                    <h4>
+                        مخارج
+                    </h4>
+                </div>
+                {% for expense in expenses %}
+                <form action="/visit_friend_profile/{{ member.phone }}/" class="form-row align-items-center"
+                      method="post" style="background: white; padding: 5px">
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="first_name"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ expense.spender.first_name }}">
+                            <span class="input-group-addon">نام خرج‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="last_name"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ expense.spender.last_name }}">
+                            <span class="input-group-addon">نام خانوادگی خرج‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="col-auto my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ expense.cost }}">
+                            <span class="input-group-addon">مقدار</span>
+                        </div>
+                    </div>
+
+                </form>
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Add Expense -->
+            <div class="main-item">
+                <form action="/add_expense/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-auto my_form_item">
+                        <input hidden name="group_id" value="{{ group_id }}">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">افزودن خرج جدید</button>
+                    </div>
+                </form>
+            </div>
+
 
             <!-- Delete Group -->
             <div class="main-item">
