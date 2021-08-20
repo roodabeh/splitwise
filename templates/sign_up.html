@@ -1,129 +1,67 @@
-{% extends 'auth_base.html' %} {% block title %}- ثبت نام{% endblock %} 
+{% extends 'auth_base.html' %} {% block title %}- ثبت نام{% endblock %}
 {% block auth_content %}
-<form class="login100-form validate-form" method="post" action="">
-  <span class="login100-form-title p-b-33"> ساختن حساب کاربری </span>
+<form action="" class="login100-form validate-form" enctype="multipart/form-data" method="post">
+    <span class="login100-form-title p-b-33"> ساختن حساب کاربری </span>
 
-  <div class="wrap-input100 validate-input" data-validate="نام اجباریست">
-    <input
-      class="input100"
-      required
-      style="direction: rtl"
-      type="text"
-      name="first_name"
-      placeholder="نام"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
-  <div
-    class="wrap-input100 validate-input"
-    data-validate="نام خانوادگی اجباریست"
-  >
-    <input
-      class="input100"
-      required
-      style="direction: rtl"
-      type="text"
-      name="last_name"
-      placeholder="نام خانوادگی"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
-  <div class="wrap-input100 validate-input" data-validate="تلفن اجباریست">
-    <input
-      class="input100 p_to_e_number"
-      required
-      style="direction: rtl"
-      type="tel"
-      name="phone"
-      placeholder="شماره تلفن"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
+    <div class="wrap-input100 validate-input" data-validate="نام اجباریست">
+        <input class="input100" name="first_name" placeholder="نام" required style="direction: rtl" type="text"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div
-    class="wrap-input100 validate-input"
-    data-validate="ایمیل اجباریست"
-  >
-    <input
-      class="input100"
-      required
-      style="direction: rtl"
-      type="email"
-      name="email"
-      placeholder="ایمیل"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
+    <div class="wrap-input100 validate-input" data-validate="نام خانوادگی اجباریست">
+        <input class="input100" name="last_name" placeholder="نام خانوادگی" required style="direction: rtl"
+               type="text"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div
-    class="wrap-input100 rs1 validate-input"
-    data-validate="گذرواژه الزامیست"
-  >
-    <input
-      id="password"
-      class="input100"
-      required
-      type="password"
-      style="direction: rtl"
-      name="password"
-      placeholder="گذرواژه"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
+    <div class="wrap-input100 validate-input" data-validate="تلفن اجباریست">
+        <input class="input100 p_to_e_number" name="phone" placeholder="شماره تلفن" required style="direction: rtl"
+               type="tel"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div
-    class="wrap-input100 rs1 validate-input"
-    data-validate="باید دقیقا برابر گذرواژه باشد"
-  >
-    <input
-      id="confirm_password"
-      class="input100"
-      required
-      type="password"
-      style="direction: rtl"
-      name="confirm-password"
-      placeholder="تکرار گذرواژه"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
+    <div class="wrap-input100 validate-input" data-validate="ایمیل اجباریست">
+        <input class="input100" name="email" placeholder="ایمیل" required style="direction: rtl" type="email"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div class="wrap-input100 validate-input" data-validate="ذکر شهر اجباریست">
-    <input
-      class="input100"
-      required
-      style="direction: rtl"
-      type="text"
-      name="address"
-      placeholder="آدرس"
-    />
-    <span class="focus-input100-1"></span>
-    <span class="focus-input100-2"></span>
-  </div>
+    <div class="wrap-input100 rs1 validate-input" data-validate="گذرواژه الزامیست">
+        <input class="input100" id="password" name="password" placeholder="گذرواژه" required style="direction: rtl"
+               type="password"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div class="container-login100-form-btn m-t-20">
-    <button
-      type="submit"
-      class="my_btn"
-      style="width: 100%; background: var(--green)"
-    >
-      ثبت نام
-    </button>
-  </div>
+    <div class="wrap-input100 rs1 validate-input" data-validate="باید دقیقا برابر گذرواژه باشد">
+        <input class="input100" id="confirm_password" name="confirm-password" placeholder="تکرار گذرواژه" required
+               style="direction: rtl" type="password"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-  <div class="text-center p-t-20 p-b-4">
-    <span class="txt1"> ورود به حساب کاربری؟ </span>
+    <div class="wrap-input100 validate-input" data-validate="ذکر شهر اجباریست">
+        <input class="input100" name="address" placeholder="آدرس" required style="direction: rtl" type="text"/>
+        <span class="focus-input100-1"></span>
+        <span class="focus-input100-2"></span>
+    </div>
 
-    <a href="/login/" class="txt2 hov1"> ورود </a>
-    {% csrf_token %}
-  </div>
+    <div class="container-login100-form-btn m-t-20">
+        <button class="my_btn" style="width: 100%; background: var(--green)" type="submit"> ثبت نام</button>
+    </div>
+
+    <div class="text-center p-t-20 p-b-4">
+        <span class="txt1"> ورود به حساب کاربری؟ </span>
+
+        <a class="txt2 hov1" href="/login/"> ورود </a>
+        {% csrf_token %}
+    </div>
 </form>
 {% endblock %} {% block auth_scripts %}
+
 <script>
   var password = document.getElementById("password"),
     confirm_password = document.getElementById("confirm_password");
@@ -138,5 +76,6 @@
 
   password.onchange = validatePassword;
   confirm_password.onkeyup = validatePassword;
+
 </script>
 {% endblock %}
