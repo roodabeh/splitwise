@@ -315,9 +315,21 @@ def add_member(request, group_id):
                 other_user = find_user_by_phone_num(request.POST['phone'])
                 if other_user:
                     Membership.objects.create(person=other_user, group=group)
-                    return redirect('/visit_group/{}'.format(group.id))
                 else:
                     messages.error(request, 'کاربر مورد نظر موجود نیست!')
+        return redirect('/visit_group/{}'.format(group.id))
+    else:
+        return redirect('/login/')
+
+
+def del_member(request, group_id):
+    if request.user.is_authenticated:
+        group = ExpenseGroup.objects.get(pk=group_id)
+        if request.method == 'POST':
+            if request.user.id == group.owner.id:
+                other_user = find_user_by_phone_num(request.POST['submit'])
+                if other_user:
+                    Membership.objects.filter(person=other_user, group=group).delete()
         return redirect('/visit_group/{}'.format(group.id))
     else:
         return redirect('/login/')
