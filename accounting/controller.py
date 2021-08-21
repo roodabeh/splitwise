@@ -1,3 +1,5 @@
+# ************************* Splitwise *************************
+
 def find_min_index(debt_arr):
     min_index = 0
     for i in range(1, len(debt_arr)):
@@ -35,5 +37,10 @@ def cal_min_cash_flow(debt_arr):
         exchange_value = min(debt_arr[max_debt_index], -debt_arr[min_debt_index])
         debt_arr[max_debt_index] -= exchange_value
         debt_arr[min_debt_index] += exchange_value
+
         transactions.append((max_debt_index, min_debt_index, exchange_value))
+
+        max_debt_index = find_max_index(debt_arr)
+        min_debt_index = find_min_index(debt_arr)
+
     return transactions
