@@ -13,8 +13,8 @@
                     </h4>
                 </div>
                 {% for member in members %}
-                {% if member.id == user.id %}
-                <form action="/checkout_expense/{{ group_id }}/" class="form-row align-items-center"
+                {% if member.id != user.id %}
+                <form action="/confirm_checkout_expense/{{ group_id }}/{{ member.id }}/" class="form-row align-items-center"
                       method="post" style="background: white; padding: 5px">
 
                     <div class="col-md-6 my_form_item">

@@ -46,7 +46,7 @@ class Membership(models.Model):
 
 class Expense(models.Model):
     date = models.DateField(default=timezone.now)
-    cost = models.IntegerField(default=0)
+    cost = models.FloatField(default=0)
     group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, related_name="group_id")
     spender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="spender")
 
@@ -56,3 +56,8 @@ class Debt(models.Model):
     share = models.FloatField(default=0)
     person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expense")
 
+
+class PastCheckouts(models.Model):
+    cost = models.FloatField(default=0)
+    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payer")
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reciever")
