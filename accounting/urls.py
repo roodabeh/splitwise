@@ -31,6 +31,7 @@ urlpatterns = [
     # ************************* Expense *************************
     path('add_expense/<str:group_id>/', add_expense, name='add_expense'),
     path('confirm_expense/<str:group_id>/', confirm_expense, name='confirm_expense'),
+    path('checkout_expense/<str:group_id>/', checkout_expense, name='checkout_expense'),
 
     path('', profile, name='profile'),
 ]

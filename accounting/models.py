@@ -15,6 +15,7 @@ class User(AbstractUser):
     verified = models.BooleanField(default=False)
     emailVerified = models.BooleanField(default=False)
     avatar = models.ImageField('profile picture', upload_to="avatars/", default='admin.png')
+    debt = models.IntegerField(default=0)
 
 
 class Friendship(models.Model):
@@ -52,6 +53,6 @@ class Expense(models.Model):
 
 class Debt(models.Model):
     expense = models.ForeignKey(Expense, on_delete=models.CASCADE, related_name="expense")
-    share = models.IntegerField(default=0)
+    share = models.FloatField(default=0)
     person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expense")
 

@@ -296,7 +296,31 @@ def visit_group(request, group_id):
     if request.user.is_authenticated:
         group = ExpenseGroup.objects.get(pk=group_id)
         expenses = Expense.objects.filter(group=group_id)
-        print("expenses", expenses)
+        print(expenses)
+        member_debts = {}
+        my_debt = 0
+        for expense in expenses:
+            if expense.spender.username == request.user.username:
+                debts = Debt.objects.filter(expense=expense)
+                for debt in debts:
+                    print(debt.share, debt.person.first_name)
+                    if debt.share > 0:
+                        print(member_debts.keys(),debt.person.username)
+                        member_debts[debt.person.username] = member_debts.get(debt.person.username,0) + expense.cost*debt.share
+            else:
+                debts = Debt.objects.filter(expense=expense, person=request.user)
+                for debt in debts:
+                    my_debt += expense.cost*debt.share
+
+        member = group.members.all().filter(username=request.user.username)[0]
+        member.debt = my_debt
+        member.save()
+        for member_debt in member_debts.keys():
+            print(member_debt,member_debts[member_debt])
+            member = group.members.all().filter(username=member_debt)[0]
+            member.debt = member_debts[member_debt]
+            member.save()
+
         context = {
             'group_id': group_id,
             'owner_id': group.owner.id,
@@ -403,3 +427,38 @@ def confirm_expense(request, group_id):
         return redirect('/visit_group/{}'.format(group_id))
     else:
         return redirect('/login/')
+
+def checkout_expense(request, group_id):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            print(group_id)
+            group = ExpenseGroup.objects.get(pk=group_id)
+            print(group.members.all())
+            expenses = Expense.objects.filter(group=group_id)
+            member_debts = {}
+            my_debt = 0
+            for expense in expenses:
+                if expense.spender.username != request.user.username:
+                    debts = Debt.objects.filter(expense=expense, person=request.user)
+                    for debt in debts:
+                        my_debt += expense.cost*debt.share
+                        member_debts[expense.spender.username] = member_debts.get(expense.spender.username,0) + expense.cost*debt.share
+
+            member = group.members.all().filter(username=request.user.username)[0]
+            member.debt = my_debt
+            member.save()
+            for member_debt in member_debts.keys():
+                print(member_debt,member_debts[member_debt])
+                member = group.members.all().filter(username=member_debt)[0]
+                member.debt = member_debts[member_debt]
+                member.save()
+
+            context = {
+                'group_id': group_id,
+                'members': group.members.all(),
+            }
+            return render(request, 'group/checkout_expense.html', context=context)
+        return redirect('/visit_group/{}'.format(group_id))
+    else:
+        return redirect('/login/')
+

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <!-- Members -->
+            <div class="main-item">
+                <div class="title">
+                    <h4>
+                        سهم اعضا
+                    </h4>
+                </div>
+                {% for member in members %}
+                {% if member.id == user.id %}
+                <form action="/checkout_expense/{{ group_id }}/" class="form-row align-items-center"
+                      method="post" style="background: white; padding: 5px">
+
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="first_name"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ member.first_name }}">
+                            <span class="input-group-addon">نام</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="last_name"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ member.last_name }}">
+                            <span class="input-group-addon">نام خانوادگی</span>
+                        </div>
+                    </div>
+                    <div class="col-auto my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="amount"
+                                   style="direction: rtl; text-align: right;" type="text"
+                                   value="{{ member.debt }}">
+                            <span class="input-group-addon">بدهی</span>
+                        </div>
+                    </div>
+
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">پرداخت</button>
+                    </div>
+
+
+                </form>
+                {% endif %}
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Back -->
+            <div class="main-item">
+                <form action="/visit_group/{{ group_id }}/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">بازگشت</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

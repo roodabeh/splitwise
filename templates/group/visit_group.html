@@ -30,11 +30,21 @@
                             <span class="input-group-addon">نام خانوادگی</span>
                         </div>
                     </div>
+
                     <div class="col-md-6 my_form_item">
                         <div class="input-group" style="direction: ltr">
                             <input class="form-control" disabled name="phone" style="direction: rtl; text-align: right;"
                                    type="tel" value="{{ member.phone }}">
                             <span class="input-group-addon">تلفن</span>
+                        </div>
+                    </div>
+
+                    {% if member.id != user.id %}
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="debt" style="direction: rtl; text-align: right;"
+                                   type="text" value="{{ member.debt }}">
+                            <span class="input-group-addon">میزان بدهی این کاربر به شما</span>
                         </div>
                     </div>
                     <div class="col-auto my_form_item">
@@ -45,11 +55,38 @@
 
                         {% if is_owner and member.id != owner_id%}
                         <button class="btn btn-danger my-btn" formaction="/del_member/{{ group_id }}/" name="submit"
-                                type="submit" value="{{ member.phone }}">حذف
+                                type="submit">حذف
                         </button>
                         {% endif %}
+
                     </div>
+                    {% endif %}
+
+                    {% if member.id == user.id %}
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="debt" style="direction: rtl; text-align: right;"
+                                   type="text" value="{{ member.debt }}">
+                            <span class="input-group-addon">میزان بدهی شما به دیگران</span>
+                        </div>
+                    </div>
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-info my-btn" formaction="/checkout_expense/{{ group_id }}/"
+                                type="submit">پرداخت بدهی
+                        </button>
+
+                        {% if is_owner and member.id != owner_id%}
+                        <button class="btn btn-danger my-btn" formaction="/del_member/{{ group_id }}/" name="submit"
+                                type="submit">حذف
+                        </button>
+                        {% endif %}
+
+                    </div>
+                    {% endif %}
+
                 </form>
+
                 {% endfor %}
 
             </div>
