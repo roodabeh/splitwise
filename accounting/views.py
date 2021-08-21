@@ -309,8 +309,8 @@ def visit_group(request, group_id):
                     print(debt.share, debt.person.first_name)
                     if debt.share > 0:
                         print(member_debts.keys(), debt.person.username)
-                        member_debts[debt.person.username] = member_debts.get(debt.person.username,
-                                                                              0) + expense.cost * debt.share
+                        member_debts[debt.person.username] = member_debts.get(debt.person.username, 0) + \
+                                                             expense.cost * debt.share
             else:
                 debts = Debt.objects.filter(expense=expense, person=request.user)
                 for debt in debts:

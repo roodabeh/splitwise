@@ -1,46 +1,54 @@
+from accounting.models import *
+
+
 # ************************* Splitwise *************************
 
-def find_min_index(debt_arr):
-    min_index = 0
-    for i in range(1, len(debt_arr)):
-        if debt_arr[i] < debt_arr[min_index]:
-            min_index = i
+def find_min_index(debt_arr: {}):
+    min_index = debt_arr.keys[0]
+    for username in debt_arr.keys():
+        if debt_arr[username] < debt_arr[min_index]:
+            min_index = username
     return min_index
 
 
-def find_max_index(debt_arr):
-    max_index = 0
-    for i in range(1, len(debt_arr)):
-        if debt_arr[i] > debt_arr[max_index]:
-            max_index = i
+def find_max_index(debt_arr: {}):
+    max_index = debt_arr.keys[0]
+    for username in debt_arr.keys():
+        if debt_arr[username] > debt_arr[max_index]:
+            max_index = username
     return max_index
 
 
-def get_payment_graph(spends):
-    # convert list of spends to a payment flow graph
-    pass
+# convert list of spends to a debt arr
+# pay_amount['p'] is the net amount to be paid to person 'p'
+def get_pay_amount_array(expenses):
+    pay_amount = {}
+    for expense in expenses:
+        spender = expense.spender
+        pay_amount[spender.username] = pay_amount.get(spender.username, 0) + expense.cost
+
+        debts = Debt.objects.filter(expense=expense)
+        for debt in debts:
+            debtor = debt.person
+            pay_amount[debtor.username] = pay_amount.get(debtor.username, 0) - expense.cost * debt.share
+
+    return pay_amount
 
 
-def convert_graph_2_debt_arr(graph, n):
-    debt_arr = [0 for _ in range(n)]
-    for j in range(n):
-        for i in range(n):
-            debt_arr[j] += (graph[i][j] - graph[j][i])
-    return debt_arr
-
-
-def cal_min_cash_flow(debt_arr):
+def cal_min_cash_flow(expenses):
     transactions = list()
-    max_debt_index = find_max_index(debt_arr)
-    min_debt_index = find_min_index(debt_arr)
-    while debt_arr[max_debt_index] != 0 or debt_arr[min_debt_index] != 0:
-        exchange_value = min(debt_arr[max_debt_index], -debt_arr[min_debt_index])
-        debt_arr[max_debt_index] -= exchange_value
-        debt_arr[min_debt_index] += exchange_value
 
-        transactions.append((max_debt_index, min_debt_index, exchange_value))
+    pay_amount = get_pay_amount_array(expenses)
+    max_credit = find_max_index(pay_amount)
+    max_dept = find_min_index(pay_amount)
+    while pay_amount[max_credit] != 0 or pay_amount[max_dept] != 0:
+        exchange_value = min(pay_amount[max_credit], -pay_amount[max_dept])
+        pay_amount[max_credit] -= exchange_value
+        pay_amount[max_dept] += exchange_value
 
-        max_debt_index = find_max_index(debt_arr)
-        min_debt_index = find_min_index(debt_arr)
+        transactions.append((max_credit, max_dept, exchange_value))
+
+        max_credit = find_max_index(pay_amount)
+        max_dept = find_min_index(pay_amount)
 
     return transactions
