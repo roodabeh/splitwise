@@ -60,4 +60,4 @@ class Debt(models.Model):
 class PastCheckouts(models.Model):
     cost = models.FloatField(default=0)
     payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="payer")
-    expense = models.ForeignKey(Expense, on_delete=models.CASCADE, related_name="expense")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="receiver")

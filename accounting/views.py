@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, redirect
 
+from accounting.controller import cal_min_cash_flow
 from accounting.forms import *
 
 
@@ -300,21 +301,15 @@ def visit_group(request, group_id):
             member.save()
 
         expenses = Expense.objects.filter(group=group_id)
+        transactions = cal_min_cash_flow(expenses)
         member_debts = {}
         my_debt = 0
-        for expense in expenses:
-            if expense.spender.username == request.user.username:
-                debts = Debt.objects.filter(expense=expense)
-                for debt in debts:
-                    print(debt.share, debt.person.first_name)
-                    if debt.share > 0:
-                        print(member_debts.keys(), debt.person.username)
-                        member_debts[debt.person.username] = member_debts.get(debt.person.username, 0) + \
-                                                             expense.cost * debt.share
-            else:
-                debts = Debt.objects.filter(expense=expense, person=request.user)
-                for debt in debts:
-                    my_debt += expense.cost * debt.share
+        for transaction in transactions:
+            receiver, payer, amount = transaction
+            if payer == request.user.username:
+                my_debt += amount
+            elif receiver == request.user.username:
+                member_debts[payer] = member_debts.get(payer, 0) + amount
 
         member = group.members.all().filter(username=request.user.username)[0]
         member.debt = my_debt
@@ -441,20 +436,13 @@ def checkout_expense(request, group_id):
                 member.save()
 
             expenses = Expense.objects.filter(group=group_id)
-            member_debts = {}
-            for expense in expenses:
-                if expense.spender.username != request.user.username:
-                    debts = Debt.objects.filter(expense=expense, person=request.user)
-                    print("debtsdebts", debts)
-                    for debt in debts:
-                        member_debts[expense.spender.username] = member_debts.get(expense.spender.username,
-                                                                                  0) + expense.cost * debt.share
-
-            for member_debt in member_debts.keys():
-                print(member_debt, member_debts[member_debt])
-                member = group.members.all().filter(username=member_debt)[0]
-                member.debt = member_debts[member_debt]
-                member.save()
+            transactions = cal_min_cash_flow(expenses)
+            for transaction in transactions:
+                receiver, payer, amount = transaction
+                if payer == request.user.username:
+                    receiver_user = User.objects.get_by_natural_key(receiver)
+                    receiver_user.debt += amount
+                    receiver_user.save()
 
             context = {
                 'group_id': group_id,
@@ -470,19 +458,20 @@ def confirm_checkout_expense(request, group_id, user_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             group = ExpenseGroup.objects.get(pk=group_id)
-            for member in group.members.all():
-                member.debt = 0
-                member.save()
 
-            expenses = Expense.objects.filter(group=group_id, spender=User.objects.get(pk=user_id))
-            for expense in expenses:
-                print("hereee")
-                debts = Debt.objects.filter(expense=expense, person=request.user)
-                for debt in debts:
-                    PastCheckouts.objects.create(cost=expense.cost * debt.share, payer=request.user,
-                                                 expense=expense)
-                    debt.delete()
-                print("PastCheckouts", PastCheckouts.objects.get(pk=group_id))
+            amount = float(request.POST['submit'])
+            receiver_user = User.objects.get(pk=user_id)
+            PastCheckouts.objects.create(cost=amount, payer=request.user, receiver=receiver_user)
+
+            receiver_user.debt = 0
+            receiver_user.save()
+
+            expenses = Expense.objects.filter(group=group_id)
+            while amount > 0:
+                expense = expenses.pop(0)
+                debt = Debt.objects.filter(expense=expense, person=request.user)[0]
+                amount -= min(amount, expense.cost * debt.share)
+                debt.delete()
 
             context = {
                 'group_id': group_id,
