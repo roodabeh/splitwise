@@ -4,7 +4,7 @@ from accounting.models import *
 # ************************* Splitwise *************************
 
 def find_min_index(debt_arr: {}):
-    min_index = debt_arr.keys[0]
+    min_index = list(debt_arr.keys())[0]
     for username in debt_arr.keys():
         if debt_arr[username] < debt_arr[min_index]:
             min_index = username
@@ -12,7 +12,7 @@ def find_min_index(debt_arr: {}):
 
 
 def find_max_index(debt_arr: {}):
-    max_index = debt_arr.keys[0]
+    max_index = list(debt_arr.keys())[0]
     for username in debt_arr.keys():
         if debt_arr[username] > debt_arr[max_index]:
             max_index = username
@@ -24,14 +24,14 @@ def find_max_index(debt_arr: {}):
 def get_pay_amount_array(expenses):
     pay_amount = {}
     for expense in expenses:
-        spender = expense.spender
-        pay_amount[spender.username] = pay_amount.get(spender.username, 0) + expense.cost
-
+        # expense.delete()
+        # continue
         debts = Debt.objects.filter(expense=expense)
         for debt in debts:
-            debtor = debt.person
-            pay_amount[debtor.username] = pay_amount.get(debtor.username, 0) - expense.cost * debt.share
+            debtor = debt.debtor
+            pay_amount[debtor.username] = pay_amount.get(debtor.username, 0) - debt.share
 
+    print(pay_amount)
     return pay_amount
 
 
@@ -39,9 +39,13 @@ def cal_min_cash_flow(expenses):
     transactions = list()
 
     pay_amount = get_pay_amount_array(expenses)
+    if len(pay_amount) == 0:
+        return transactions
+
     max_credit = find_max_index(pay_amount)
     max_dept = find_min_index(pay_amount)
-    while pay_amount[max_credit] != 0 or pay_amount[max_dept] != 0:
+    print(pay_amount[max_credit], pay_amount[max_dept])
+    while int(pay_amount[max_credit]) != 0 or int(pay_amount[max_dept]) != 0:
         exchange_value = min(pay_amount[max_credit], -pay_amount[max_dept])
         pay_amount[max_credit] -= exchange_value
         pay_amount[max_dept] += exchange_value

@@ -54,7 +54,7 @@ class Expense(models.Model):
 class Debt(models.Model):
     expense = models.ForeignKey(Expense, on_delete=models.CASCADE, related_name="expense")
     share = models.FloatField(default=0)
-    person = models.ForeignKey(User, on_delete=models.CASCADE, related_name="expense")
+    debtor = models.ForeignKey(User, on_delete=models.CASCADE, related_name="debtor")
 
 
 class PastCheckouts(models.Model):
