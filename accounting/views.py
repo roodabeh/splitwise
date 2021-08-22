@@ -186,6 +186,7 @@ def visit_other_user_profile(request):
                 'other_first_name': other_user.first_name,
                 'other_last_name': other_user.last_name,
                 'other_phone': other_user.phone,
+                'avatar': other_user.avatar.url,
                 'is_friend': is_friend(request.user, other_user)
             }
             return render(request, 'other_user_profile.html', context=content)
@@ -255,6 +256,7 @@ def visit_friend_profile(request, phone):
                     'other_first_name': other_user.first_name,
                     'other_last_name': other_user.last_name,
                     'other_phone': other_user.phone,
+                    'avatar': other_user.avatar.url,
                     'is_friend': is_friend(request.user, other_user)
                 }
                 return render(request, 'other_user_profile.html', context=content)
