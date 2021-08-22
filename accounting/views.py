@@ -499,5 +499,10 @@ def confirm_checkout_expense(request, group_id, user_id):
 
 def view_past_checkouts(request):
     if request.user.is_authenticated:
-        return render(request, 'profile.html')
+        checkouts = PastCheckouts.objects.filter(payer=request.user)
+        print("checkouts",checkouts)
+        context = {
+            'checkouts': list(checkouts),
+        }
+        return render(request, 'checkout_history.html', context=context)
     return redirect('/login/')
