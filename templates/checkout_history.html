@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="main-item">
+                <div class="title">
+                    <h4>
+                        پرداخت‌های فبلی انجام شده
+                    </h4>
+                </div>
+                {% for checkout in checkouts %}
+                <form action="/visit_group/{{ group.id }}/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
+                                   type="text"
+                                   value="{{ checkout.receiver.first_name }}">
+                            <span class="input-group-addon">نام دریافت‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
+                                   type="text"
+                                   value="{{ checkout.receiver.last_name }}">
+                            <span class="input-group-addon">نام‌خانوادگی دریافت‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
+                                   type="text"
+                                   value="{{ checkout.receiver.phone }}">
+                            <span class="input-group-addon">شماره دریافت‌کننده</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 my_form_item">
+                        <div class="input-group" style="direction: ltr">
+                            <input class="form-control" disabled name="name" style="direction: rtl; text-align: right;"
+                                   type="text"
+                                   value="{{ checkout.cost }}">
+                            <span class="input-group-addon">مقدار دریافتی</span>
+                        </div>
+                    </div>
+                </form>
+                {% endfor %}
+
+            </div>
+            <div class="main-item">
+                <form action="/profile/" class="form-row align-items-center" method="post"
+                      style="background: white; padding: 5px">
+                    <div class="col-auto my_form_item">
+                        {% csrf_token %}
+                        <button class="btn btn-success my-btn" type="submit">بازگشت</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

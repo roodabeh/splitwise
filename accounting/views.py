@@ -187,6 +187,7 @@ def visit_other_user_profile(request):
                 'other_first_name': other_user.first_name,
                 'other_last_name': other_user.last_name,
                 'other_phone': other_user.phone,
+                'avatar': other_user.avatar.url,
                 'is_friend': is_friend(request.user, other_user)
             }
             return render(request, 'other_user_profile.html', context=content)
@@ -256,6 +257,7 @@ def visit_friend_profile(request, phone):
                     'other_first_name': other_user.first_name,
                     'other_last_name': other_user.last_name,
                     'other_phone': other_user.phone,
+                    'avatar': other_user.avatar.url,
                     'is_friend': is_friend(request.user, other_user)
                 }
                 return render(request, 'other_user_profile.html', context=content)
@@ -495,3 +497,13 @@ def confirm_checkout_expense(request, group_id, user_id):
             return redirect('/visit_group/{}'.format(group_id))
     else:
         return redirect('/login/')
+
+def view_past_checkouts(request):
+    if request.user.is_authenticated:
+        checkouts = PastCheckouts.objects.filter(payer=request.user)
+        print("checkouts", checkouts)
+        context = {
+            'checkouts': list(checkouts),
+        }
+        return render(request, 'checkout_history.html', context=context)
+    return redirect('/login/')
