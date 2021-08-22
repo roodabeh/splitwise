@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', profile, name='profile'),
     path('edit_information/', edit_information, name='edit_information'),
+    path('view_past_checkouts/', view_past_checkouts, name='view_past_checkouts'),
     path('user_info/', user_info, name='user_info'),
     path('list_of_friends/', list_of_friends, name='list_of_friends'),
     path('visit_other_user_profile/', visit_other_user_profile, name='visit_other_user_profile'),
