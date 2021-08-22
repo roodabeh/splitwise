@@ -44,7 +44,9 @@
 
                     <div class="col-auto my_form_item">
                         {% csrf_token %}
-                        <button class="btn btn-success my-btn" type="submit">پرداخت</button>
+                        <button class="btn btn-success my-btn" name="submit" type="submit" value="{{ member.debt }}">
+                            پرداخت
+                        </button>
                     </div>
 
 

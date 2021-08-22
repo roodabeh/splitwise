@@ -400,9 +400,7 @@ def list_of_groups(request):
 def add_expense(request, group_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            print(group_id)
             group = ExpenseGroup.objects.get(pk=group_id)
-            print(group.members.all())
             context = {
                 'group_id': group_id,
                 'members': group.members.all(),
@@ -417,17 +415,18 @@ def confirm_expense(request, group_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             group = ExpenseGroup.objects.get(pk=group_id)
-            expense = Expense.objects.create(group=group, cost=request.POST["cost"], spender=request.user)
+            expense = Expense.objects.create(group=group, cost=float(request.POST["cost"]), spender=request.user)
             shares = []
             for member in group.members.all():
                 shares.append(int(request.POST["share_" + member.username]))
-            print(shares, sum(shares))
+            print(expense.cost, type(expense.cost))
             i = 0
             for member in group.members.all():
                 if member.username != request.user.username:
-                    Debt.objects.create(expense=expense, share=shares[i] / sum(shares), person=member)
+                    Debt.objects.create(expense=expense, share=expense.cost * shares[i] / sum(shares), debtor=member)
                 else:
-                    Debt.objects.create(expense=expense, share=(shares[i] - sum(shares)) / sum(shares), person=member)
+                    Debt.objects.create(expense=expense, share=expense.cost * (shares[i] - sum(shares)) / sum(shares),
+                                        debtor=member)
                 i += 1
         return redirect('/visit_group/{}'.format(group_id))
     else:
@@ -470,23 +469,34 @@ def confirm_checkout_expense(request, group_id, user_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             group = ExpenseGroup.objects.get(pk=group_id)
-            member = group.members.all().filter(id=user_id)[0]
-            if member.debt >0:
-                for member in group.members.all():
-                    member.debt = 0
-                    member.save()
+            for member in group.members.all():
+                print(member.username, member.debt)
+
+            amount = float(request.POST['submit'])
+            if amount > 0:
+                receiver_user = User.objects.get(pk=user_id)
+                PastCheckouts.objects.create(cost=amount, payer=request.user, receiver=receiver_user)
+
+                assert receiver_user.debt == amount
+                receiver_user.debt = 0
+                receiver_user.save()
+
                 expenses = Expense.objects.filter(group=group_id)
                 for expense in expenses:
-                    print(expense.spender.id,user_id)
-                    if expense.spender.id == int(user_id):
-                        print("hereee")
-                        debts = Debt.objects.filter(expense=expense, person=request.user)
-                        for debt in debts:
-                            PastCheckouts.objects.create(cost=expense.cost*debt.share, payer=request.user, reciever= expense.spender)
-                            debt.delete()
-                    print("PastCheckouts",PastCheckouts.objects.get(pk=group_id))
-            else:
-                print("no debt")
+                    debts = Debt.objects.filter(expense=expense, debtor=request.user)
+                    if len(debts) > 0:
+                        debt = debts[0]
+                        debt.share -= amount
+                        debt.save()
+                        break
+
+                for expense in expenses:
+                    debts = Debt.objects.filter(expense=expense, debtor=receiver_user)
+                    if len(debts) > 0:
+                        debt = debts[0]
+                        debt.share += amount
+                        debt.save()
+                        break
 
             context = {
                 'group_id': group_id,
